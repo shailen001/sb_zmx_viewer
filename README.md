@@ -87,6 +87,20 @@ no OpticStudio and no internet connection are needed. This guide is also availab
 Red ticks mark the ray-traced clear apertures. Dashed rays are virtual. Mirrors, fold mirrors, prisms, central
 obscurations and spiders are drawn as they are.
 
+### Selecting a lens or an air space
+
+Click a lens, a surface or the gap between two lenses. It's highlighted on the drawing, with its edge thickness drawn
+and labelled at the height where it's measured. The **Inspector** (View ▸ Inspector) lists its centre and edge
+thicknesses, apertures and sags, and its row is selected in the tables. The **Air spaces** tab gives every gap's
+centre and edge thickness: the numbers needed to design spacers and retainers.
+
+![An air space selected](screenshots/air_space_selected.png)
+
+A lens selected shows its centre and edge thicknesses on the drawing. The Inspector gives its faces, clear and
+mechanical apertures, material, volume and mass; the **Elements** tab lists the same for every lens.
+
+![A lens selected](screenshots/lens_selected.png)
+
 **3D layout** (**View ▸ 3D layout…**, Ctrl+3, or the **3D** button): shaded, see-through lens solids with rays traced
 in 3D. Drag to rotate, wheel to zoom, right-drag to pan.
 
@@ -201,24 +215,65 @@ Finds the best air/glass surface for a dielectric filter coating: the one where 
 the smallest angle in air, over every field, wavelength and (for a zoom) configuration. Click a row to see the worst
 ray on the layout.
 
-### Refocus (Ctrl+F)
+### Refocus (Ctrl+F, or the Refocus button on the toolbar)
 
-Best focus for the whole field, using the field and wavelength weights in the file, by RMS wavefront or RMS spot
-size. **Apply** moves the focus for this session; every window then shows the refocused design.
+Best focus for the whole field, like OpticStudio's Quick Focus: the change of one air gap that gives the best image
+over every field and wavelength, using the field and wavelength weights in the file.
+
+- **Criterion:** RMS wavefront error, or RMS spot radius (about the spot centroid or the chief ray).
+- **Focus moves:** the last air space, in front of any window, cover glass or filter just before the image, so they
+  move with the sensor as in a real focus adjustment; or the gap just before the image, as OpticStudio does.
+- The plot shows the criterion through focus for each field (dashed) and weighted over the field (bold), with the
+  current and best focus marked; the table gives each field at both. Double-click a field weight to change it.
+- **Apply** moves the focus for this session: every window then shows the refocused design, and the header says so.
+  **Reset to file focus** undoes it. The file isn't changed.
+
+![Refocus](screenshots/refocus.png)
 
 ---
 
 ## Glass catalogs
 
 The program carries the common glass catalogs (SCHOTT, OHARA, HOYA, CDGM, SUMITA, HIKARI, NHG, CORNING, infrared
-materials, plastics and more, about 4,600 materials). Glasses are looked up in the order of the file's catalog list,
+materials, plastics and more, about 4,000 materials). Glasses are looked up in the order of the file's catalog list,
 as OpticStudio does; the **Materials** tab shows which catalog each glass came from.
 
-To use other catalogs:
+### Using your own catalogs, e.g. OpticStudio's
 
-- **Drop an `.agf` file** onto the window to add it, or use **File ▸ Use glass catalog folder…**.
-- **Put a `Glasscat` folder next to the program** to replace the built-in set.
-- **Catalogs inside a `.zar`** archive are used automatically.
+If you have OpticStudio, you can point the viewer at the same catalogs your designs were made with. OpticStudio keeps
+them in `Documents\Zemax\Glasscat`; its Project Preferences ▸ Folders show the exact path.
+
+The simplest way: **File ▸ Use glass catalog folder…** and choose that folder. The viewer remembers it and uses it every
+time it starts. **File ▸ Use the default glass catalogs** goes back to the built-in ones.
+
+Or start the viewer with `-g` (or `--glasscat`) and the folder, which overrides the remembered one for that start:
+
+- **Windows:** make a shortcut to the program (right-click it ▸ **Create shortcut**), open the shortcut's
+  **Properties**, and add the folder to the end of **Target**:
+  ```
+  "C:\Tools\sb_zmx_viewer-windows-x64.exe" -g "C:\Users\you\Documents\Zemax\Glasscat"
+  ```
+  Start the viewer from that shortcut from then on. The same works from a Command Prompt, and a lens file can follow:
+  `sb_zmx_viewer-windows-x64.exe -g "C:\Users\you\Documents\Zemax\Glasscat" "C:\Lenses\mylens.zmx"`.
+- **Linux:**
+  ```
+  ./sb_zmx_viewer-linux-x86_64 -g ~/Zemax/Glasscat
+  ./sb_zmx_viewer-linux-x86_64 -g ~/Zemax/Glasscat mylens.zmx
+  ```
+
+The folder given is used instead of the built-in catalogs. The **System** tab shows which folder is in use, and the
+**Materials** tab which catalog each glass came from.
+
+Other ways:
+
+- **A `Glasscat` folder next to the program** is used automatically every time, instead of the built-in set.
+- **Drop an `.agf` file** onto the window to add that one catalog.
+- **Catalogs inside a `.zar`** archive are used automatically for that design.
+
+In order: the folder given with `-g`, then the folder remembered from File ▸ Use glass catalog folder…, then a
+`Glasscat` folder next to the program, then one in the current folder, then the built-in catalogs. (The command-line
+options of the Linux program, such as `--summary`, don't use the remembered folder, so their results don't depend on
+an earlier session; give `-g` there.) Catalogs inside a `.zar`, and `.agf` files dropped on the window, come before all of these.
 
 If a design names a catalog the program doesn't have, the notes bar says so and which catalogs its glasses were taken
 from instead. Copies of a glass in different catalogs can differ slightly, so add the original `.agf` if you have it.
@@ -261,7 +316,8 @@ The Linux program also works without its window, printing results to the termina
 ./sb_zmx_viewer-linux-x86_64 --help                               # every option
 ```
 
-`--config N` picks a configuration of a multi-configuration file; `-g FOLDER` uses another glass catalog folder.
+`--config N` picks a configuration of a multi-configuration file; `-g FOLDER` uses another glass catalog folder
+(`--where-glasscat` prints which folder would be used).
 
 ---
 
