@@ -1,4 +1,4 @@
-# sb_zmx_viewer
+# sb_zmx_viewer - coming soon - Nov/Dec 2026
 
 **View and check Zemax OpticStudio lens designs without an OpticStudio licence.**
 
