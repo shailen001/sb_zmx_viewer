@@ -56,7 +56,8 @@ no OpticStudio and no internet connection are needed. This guide is also availab
 3. **Try the demo:** **File ▸ Open demo ▸ Double Gauss demo** opens a 6-element 50 mm F/2 Double Gauss that ships
    with the program.
 4. **Open your own design:** drag a `.zmx` or `.zar` file onto the window, or use **File ▸ Open** (Ctrl+O). On Linux
-   you can also give it on the command line: `./sb_zmx_viewer-linux-x86_64 mylens.zmx`.
+   you can also give it on the command line: `./sb_zmx_viewer-linux-x86_64 mylens.zmx`. A large design shows its
+   progress while it opens (**Cancel** keeps the design you had).
 5. **Run an analysis** from the **Analysis** menu (or the Analysis drop-down on the toolbar). Each one opens in its own
    window and follows whatever design is loaded.
 
@@ -102,7 +103,8 @@ mechanical apertures, material, volume and mass; the **Elements** tab lists the 
 ![A lens selected](screenshots/lens_selected.png)
 
 **3D layout** (**View ▸ 3D layout…**, Ctrl+3, or the **3D** button): shaded, see-through lens solids with rays traced
-in 3D. Drag to rotate, wheel to zoom, right-drag to pan.
+in 3D. Drag to rotate (about whatever is in the middle of the view, as in a CAD program), wheel to zoom about the
+cursor, right-drag to pan, double-click to fit.
 
 ![3D layout](screenshots/layout_3d.png)
 
@@ -325,8 +327,9 @@ The Linux program also works without its window, printing results to the termina
 
 - **Not modelled:** user-defined (DLL) surfaces and encrypted black boxes (rays are drawn up to them and the analyses
   are turned off; the notes say so), and non-sequential objects other than polygon prisms.
-- **Temperature configurations:** thermally scaled radii and thicknesses (thermal pickups) are taken as stored in the
-  file. OpticStudio recomputes them when it loads the file, so they can differ by a few micrometres.
+- **Temperature configurations:** thermally scaled radii and thicknesses (thermal pickups) are worked out again as
+  OpticStudio does when it loads the file; a few air spaces still differ from OpticStudio's by up to about ten
+  micrometres, and thermally scaled aspheric terms are taken as stored in the file.
 - **Relative illumination** behind very small rectangular apertures needs a fine pupil sampling (raise it in the
   window) to settle.
 - **Missing glass catalogs:** see [Glass catalogs](#glass-catalogs).
