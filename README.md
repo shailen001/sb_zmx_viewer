@@ -82,7 +82,7 @@ no OpticStudio and no internet connection are needed. This guide is also availab
 | Fit the lenses / fit everything | double-click, or **View ▸ Fit lenses** (F) / **Fit all** (Shift+F) |
 | Details of a lens, surface or air space | click it (**View ▸ Inspector**, Ctrl+I, lists everything about it) |
 | Plane drawn | the **Auto**, **Y-Z**, **X-Z** buttons on the left |
-| Rays per field | the **3 / 5 / 7 rays** button on the left |
+| Rays per field | the **5 / 7 / 0 / 3 rays** button on the left (0: no rays) |
 | Labels | **View ▸ Surface #** and **Lens #** |
 
 Red ticks mark the ray-traced clear apertures. Dashed rays are virtual. Mirrors, fold mirrors, prisms, central
